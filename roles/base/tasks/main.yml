@@ -1,0 +1,6 @@
+# Base setup
+
+- include: base_packages.yml
+- include: centos_base.yml
+- include: snmpd.yml
+- include: munin-node.yml

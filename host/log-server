@@ -1,0 +1,6 @@
+[fluentd-server]
+127.0.0.1
+
+[fluentd-clients]
+127.0.0.1
+

@@ -1,0 +1,2 @@
+- name: rsyslog restart
+  service: name=rsyslog state=restarted enabled=yes

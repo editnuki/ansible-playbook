@@ -1,0 +1,29 @@
+- name: cidr_allow chnage
+  command: sed -i 's/# cidr_allow 127.0.0.1\/32/cidr_allow 10.0.0.0\/8/g' /etc/munin/munin-node.conf
+
+- name: munin plugin add
+  copy: src={{ item.src }} dest=/usr/share/munin/plugins/{{ item.dest }} owner=root group=root mode=0755
+  with_items:
+    - { src: cpu_by_process , dest: cpu_by_process }
+
+- name: munin plugin link
+  file: src=/usr/share/munin/plugins/{{ item.src }} dest=/etc/munin/plugins/{{ item.dest }} owner=root group=root state=link
+  with_items:
+    - { src: cpu_by_process , dest: cpu_by_process }
+
+- name: delete plugin
+  command: rm -f /etc/munin/plugins/{{ item }}
+  with_items:
+    - irqstats
+    - interrupts
+    - users
+    - uptime
+    - ntp_kernel_err
+    - ntp_kernel_pll_freq
+    - ntp_kernel_pll_off
+    - ntp_offset
+    - ntp_states
+    - postfix_mailqueue
+    - postfix_mailvolume
+    - postfix_mailstats
+  notify: restart munin-node

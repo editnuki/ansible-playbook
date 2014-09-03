@@ -1,0 +1,46 @@
+---
+- name: base packages install
+  yum: name={{ item }} state=installed
+  with_items:
+    - vim
+    - tmux
+    - openssh-clients
+    - rsync
+    - screen
+    - nmap
+    - lsof
+    - dstat
+    - strace
+    - file
+    - man
+    - sysstat
+    - tree
+    - tcpdump
+    - expect
+    - zip
+    - unzip
+    - htop
+    - wget
+    - bc
+    - net-snmp
+    - net-snmp-utils
+    - net-snmp-libs
+    - munin-node
+    - telnet
+    - perl-XML-Simple.noarch
+    - mailx
+    - glances
+    - iftop
+    - bmon
+    - iptraf
+    - nload
+    - nethogs
+    - slurm
+    - tcptrack
+    - vnstat
+    - bwm-ng
+    - ifstat
+    - dstat
+    - nmon
+    - statgrab-tools
+  tags: base_packages

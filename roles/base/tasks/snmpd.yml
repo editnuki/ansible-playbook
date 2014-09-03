@@ -1,0 +1,5 @@
+- name: snmpd.conf
+  copy: src=snmpd.conf dest=/etc/snmp/snmpd.conf owner=root group=root mode=0644 backup=yes
+
+- name: snmpd start
+  service: name=snmpd state=restarted enabled=yes

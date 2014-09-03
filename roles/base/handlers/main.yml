@@ -1,0 +1,4 @@
+- include: rsyslog.yml
+- include: sysctl.yml
+- include: munin-node.yml
+- include: sshd.yml

@@ -1,0 +1,42 @@
+- name: set history.sh
+  copy: src=history.sh dest=/etc/profile.d/history.sh owner=root group=root mode=0644 backup=yes
+
+- name: set security limits 90-nproc
+  copy: src=90-nproc.conf dest=/etc/security/limits.d/90-nproc.conf owner=root group=root mode=0644 backup=yes
+
+- name: set security limits conf
+  copy: src=limits.conf dest=/etc/security/limits.conf owner=root group=root mode=0644 backup=yes
+
+- name: set rsyslog
+  copy: src=rsyslog.conf dest=/etc/rsyslog.conf owner=root group=root mode=0644 backup=yes
+  notify: rsyslog restart
+
+- name: modprobe bridge
+  shell: /sbin/modprobe bridge
+
+- name: sysctl
+  template: src=sysctl.conf.j2 dest=/etc/sysctl.conf owner=root group=root mode=0644 backup=yes
+  notify: sysctl reset
+
+- name: sysstat
+  copy: src=sysstat dest=/etc/cron.d/sysstat owner=root group=root mode=0644 backup=yes
+
+- name: sshd_config
+  copy: src=sshd_config dest=/etc/ssh/sshd_config owner=root group=root mode=0600 backup=yes
+  notify: sshd restart
+
+## ここはNWのCPUの偏りを分散してくれるかもしれないおまじない
+- name: rps_cpus counter
+  copy: src=rps_cpus_count.sh dest=/tmp/rps_cpus_count.sh owner=root group=root mode=0755
+
+- name: rps_cpus
+  shell: /tmp/rps_cpus_count.sh > /sys/class/net/eth0/queues/rx-0/rps_cpus
+
+- name: rps_flow_cnt
+  shell: echo "32768" > /sys/class/net/eth0/queues/rx-0/rps_flow_cnt
+
+- name: rps_sock_flow_entries
+  shell: echo "32768" > /proc/sys/net/core/rps_sock_flow_entries
+
+## この上までがおまじない
+

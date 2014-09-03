@@ -1,0 +1,2 @@
+- name: sysctl reset
+  shell: /sbin/sysctl -p
