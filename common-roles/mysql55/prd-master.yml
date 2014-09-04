@@ -2,8 +2,7 @@
   hosts: mysql-server-master
   sudo: yes
   roles:
- #   - ../base
+    - ../base
     - ../mysql55
   vars_files:
-    - vars/prd-master.yml
     - vars/cnf.yml

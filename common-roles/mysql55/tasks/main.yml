@@ -1,3 +1,2 @@
-#- include: repo.yml
-#- include: mysql55.yml
+- include: mysql55.yml
 - include: my_cnf.yml
