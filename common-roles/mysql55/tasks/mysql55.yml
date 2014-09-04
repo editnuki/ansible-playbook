@@ -1,0 +1,11 @@
+- name: mysql55 install
+  yum: name={{ item }} state=installed enablerepo=amzn-updates
+  with_items:
+    - mysql55-bench
+    - mysql55-common
+    - mysql55-devel
+    - mysql55-embedded
+    - mysql55-embedded-devel
+    - mysql55-libs
+    - mysql55-server
+    - mysql55-test

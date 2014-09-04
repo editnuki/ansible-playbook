@@ -1,0 +1,8 @@
+- name: Setup apache
+  hosts: apache-webserver
+  sudo: yes
+  roles:
+    - ../base
+    - ../apache
+#  vars_files:
+#    - vars/prd.yml

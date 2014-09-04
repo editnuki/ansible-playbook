@@ -1,0 +1,5 @@
+#- name: add epel repo
+#  copy: src=epel.repo dest=/etc/yum.repos.d/epel.repo owner=root group=root backup=yes
+#
+#- name: add eple rpm-gpg
+#  copy: src=RPM-GPG-KEY-EPEL-6 dest=/etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-6 owner=root group=root 

@@ -1,0 +1,9 @@
+
+- name: server_id generate
+  shell: hostname -I | sed -e 's/ //' | awk -F. '{print $2,$3,$4}' | sed -e 's/ //g'
+  register: mysql_server_id
+
+- name: my.cnf
+  template: src=my.cnf.j2 dest=/etc/my.cnf owner=root group=root backup=yes
+  register: last_result
+

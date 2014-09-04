@@ -1,0 +1,199 @@
+#***********************************************************
+#
+# my.cnf for MySQL <%= @version %>
+#
+#***********************************************************
+
+#-----------------------------------------------------------
+# MySQL clients
+#-----------------------------------------------------------
+[client]
+port            = 3306
+socket          = {{ mysql_socket }}
+
+#-----------------------------------------------------------
+# MySQL server
+#-----------------------------------------------------------
+[mysqld]
+port            = {{ mysql_port }}
+socket          = {{ mysql_socket }}
+character-set-server = {{ mysql_character_set_server }}
+datadir         = {{ mysql_datadir }}
+bind-address    = {{ mysql_bind_address }}
+
+###### Generic Configuration
+
+back_log = {{ mysql_back_log }}
+#skip-networking
+{% if 'skip_name_resolve' in mysql_skip_name_resolve %}
+skip-name-resolve
+{% endif %}
+max_connections = {{ mysql_max_connections }}
+max_connect_errors = {{ mysql_max_connect_errors }}
+table_cache = {{ mysql_table_cache }}
+
+#external-locking
+max_allowed_packet = {{ mysql_max_allowed_packet }}
+binlog_cache_size = {{ mysql_binlog_cache_size }}
+sort_buffer_size = {{ mysql_sort_buffer_size }}
+join_buffer_size = {{ mysql_join_buffer_size }}
+thread_cache_size = {{ mysql_thread_cache_size }}
+thread_concurrency = {{ ansible_processor_vcpus * 2 }}
+query_cache_size = {{ mysql_query_cache_size }}
+query_cache_type = {{ mysql_query_cache_type }}
+query_cache_limit = {{ mysql_query_cache_limit }}
+ft_min_word_len = {{ mysql_ft_min_word_len }}
+#memlock
+default_storage_engine = {{ mysql_default_storage_engine }}
+thread_stack = {{ mysql_thread_stack }}
+transaction_isolation = REPEATABLE-READ
+tmp_table_size = {{ mysql_tmp_table_size }}
+
+performance_schema = {{ mysql_performance_schema }}
+
+##### Generic Log Configuration
+
+log_output = FILE
+general_log = OFF
+#log
+#log_warnings
+
+##### Slow Log Configuration
+
+slow_query_log = 1
+slow_query_log_file = {{ mysql_slow_query_log_file }}
+long_query_time = {{ mysql_long_query_time }}
+#log_queries_not_using_indexes
+
+##### Binary Log Configuration
+
+log_bin = mysql-bin
+binlog_format = {{ mysql_binlog_format }}
+expire_logs_days = {{ mysql_expire_logs_days }}
+
+sync_binlog = {{ mysql_sync_binlog }}
+
+##### Replication Configuration
+
+server-id = {{ mysql_server_id.stdout }}
+#slave_compressed_protocol = 0
+slave_net_timeout = {{ mysql_slave_net_timeout }}
+{% if 'mysql-server-slave' in group_names %}
+read_only
+{% endif %}
+log_slave_updates
+relay_log = mysql-relay-bin
+
+#replicate-do-table
+#replicate-ignore-table
+#replicate-do-db
+#replicate-ignore-db
+
+##### Semi Sync Replication Configuration
+
+#plugin-load=rpl_semi_sync_master=semisync_master.so
+#rpl_semi_sync_master_enabled = 1
+#rpl_semi_sync_master_timeout = 10000
+
+#plugin-load=rpl_semi_sync_slave=semisync_slave.so
+#rpl_semi_sync_slave_enabled = 1
+
+##### MyISAM Configuration
+
+key_buffer_size = {{ ansible_memtotal_mb * 0.2 }}M
+read_buffer_size = {{ mysql_read_buffer_size }}
+read_rnd_buffer_size = {{ mysql_read_rnd_buffer_size }}
+bulk_insert_buffer_size = {{ mysql_bulk_insert_buffer_size }}
+myisam_sort_buffer_size = {{ mysql_myisam_sort_buffer_size }}
+myisam_max_sort_file_size = {{ mysql_myisam_max_sort_file_size }}
+myisam_repair_threads = {{ mysql_myisam_repair_threads }}
+
+#myisam_use_mmap = 1
+
+##### Heap Table Specific Configuration
+
+max_heap_table_size = {{ mysql_max_heap_table_size }}
+
+##### Federated Specific Configuration
+
+federated
+
+##### InnoDB Specific Configuration
+
+{% if 'skip-innodb' in mysql_skip_innodb %}
+skip-innodb
+{% endif %}
+
+innodb_additional_mem_pool_size = {{ mysql_innodb_additional_mem_pool_size }}
+
+innodb_buffer_pool_size {{ ansible_memtotal_mb * 0.7}}M
+innodb_buffer_pool_instances = {{ mysql_innodb_buffer_pool_instances }}
+innodb_data_file_path = {{ mysql_innodb_data_file_path }}
+innodb_file_per_table
+
+innodb_log_buffer_size = {{ mysql_innodb_log_buffer_size }}
+innodb_log_file_size = {{ mysql_innodb_log_file_size }}
+innodb_log_files_in_group = {{ mysql_innodb_log_files_in_group }}
+
+innodb_max_dirty_pages_pct = 90
+innodb_flush_method = {{ mysql_innodb_flush_method }}
+
+innodb_thread_concurrency = {{ ansible_processor_vcpus * 2 }}
+
+innodb_flush_log_at_trx_commit = {{ mysql_innodb_flush_log_at_trx_commit }}
+
+innodb_doublewrite = {{ mysql_innodb_doublewrite }}
+
+innodb_support_xa = {{ mysql_innodb_support_xa }}
+
+#innodb_force_recovery = 1
+#innodb_fast_shutdown
+
+innodb_lock_wait_timeout = 120
+
+innodb_file_format = {{ mysql_innodb_file_format }}
+innodb_file_format_max = {{ mysql_innodb_file_format_max }}
+innodb_file_format_check = {{ mysql_innodb_file_format_check }}
+
+#innodb_adaptive_flushing = 1
+#innodb_change_buffering = inserts
+innodb_read_io_threads = {{ ansible_processor_vcpus }}
+innodb_write_io_threads = {{ ansible_processor_vcpus }}
+innodb_io_capacity = {{ mysql_innodb_io_capacity }}
+#innodb_read_ahead_threshold = 56
+#innodb_spin_wait_delay = 6
+innodb_sync_spin_loops = {{ mysql_innodb_sync_spin_loops }}
+innodb_open_files = {{ mysql_innodb_open_files }}
+
+
+
+#-----------------------------------------------------------
+# MySQL Others
+#-----------------------------------------------------------
+[mysqldump]
+quick
+max_allowed_packet = 128M
+default-character-set = {{ mysql_default_character_set }}
+
+[mysql]
+no-auto-rehash
+default-character-set = {{ mysql_default_character_set }}
+#safe-updates
+
+[isamchk]
+key_buffer = 512M
+sort_buffer_size = 512M
+read_buffer = 8M
+write_buffer = 8M
+
+[myisamchk]
+key_buffer = 512M
+sort_buffer_size = 512M
+read_buffer = 8M
+write_buffer = 8M
+
+[mysqlhotcopy]
+interactive-timeout
+
+[mysqld_safe]
+open-files-limit = 8192

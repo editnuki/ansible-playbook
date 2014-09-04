@@ -1,0 +1,9 @@
+- name: httpd install
+  yum: name={{ item }} state=installed 
+    - httpd
+    - httpd-devel
+    - httpd-tools
+
+- name: httpd mode
+  template: src=sysconfig_httpd.j2 dest=/etc/sysconfig/httpd owner=root group=root backup=yes
+

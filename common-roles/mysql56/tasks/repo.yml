@@ -1,0 +1,8 @@
+- name: mysql repo
+  copy: src=mysql-community.repo dest=/etc/yum.repos.d/mysql-community.repo owner=root group=root
+
+- name: mysql src repo
+  copy: src=mysql-community-source.repo dest=/etc/yum.repos.d/mysql-community-source.repo owner=root group=root
+
+- name: mysql gpg key
+  copy: src=RPM-GPG-KEY-mysql dest=/etc/pki/rpm-gpg/RPM-GPG-KEY-mysql owner=root group=root

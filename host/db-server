@@ -1,5 +1,5 @@
-[mysql-server]
-127.0.0.1
+[mysql-server-master]
+54.85.167.105
 
 [mariadb-server]
 127.0.0.1

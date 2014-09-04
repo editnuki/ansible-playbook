@@ -1,0 +1,15 @@
+
+
+server-id = {{ mysql_server_id.stdout }}
+innodb_buffer_pool_size {{ ansible_memtotal_mb * 0.7}}M
+hogehoge {{ ansible_processor_vcpus }}
+
+{% if 'mysql-server-master' in group_names %}
+   # some part of a configuration file that only applies to master
+aaaa
+{% endif %}
+
+{% if 'slave' in group_names %}
+   # some part of a configuration file that only applies to slave
+bbbb
+{% endif %}

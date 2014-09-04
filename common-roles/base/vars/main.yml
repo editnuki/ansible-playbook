@@ -1,0 +1,3 @@
+rps_cpus: 1
+sysctl_swappiness: 0
+sysctl_overcommit_memory: 0

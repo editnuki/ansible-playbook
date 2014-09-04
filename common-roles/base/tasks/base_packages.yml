@@ -1,6 +1,6 @@
 ---
 - name: base packages install
-  yum: name={{ item }} state=installed
+  yum: name={{ item }} state=installed enablerepo=epel
   with_items:
     - vim
     - tmux
@@ -29,18 +29,12 @@
     - telnet
     - perl-XML-Simple.noarch
     - mailx
-    - glances
     - iftop
-    - bmon
     - iptraf
     - nload
     - nethogs
-    - slurm
-    - tcptrack
-    - vnstat
-    - bwm-ng
-    - ifstat
+    - ifstatus
     - dstat
-    - nmon
     - statgrab-tools
+    - glances
   tags: base_packages
