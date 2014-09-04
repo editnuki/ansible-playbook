@@ -100,7 +100,7 @@ relay_log = mysql-relay-bin
 
 ##### MyISAM Configuration
 
-key_buffer_size = {{ ansible_memtotal_mb * 0.2 }}M
+key_buffer_size = {{ (ansible_memtotal_mb * 0.2 )|int }}M
 read_buffer_size = {{ mysql_read_buffer_size }}
 read_rnd_buffer_size = {{ mysql_read_rnd_buffer_size }}
 bulk_insert_buffer_size = {{ mysql_bulk_insert_buffer_size }}
@@ -126,7 +126,7 @@ skip-innodb
 
 innodb_additional_mem_pool_size = {{ mysql_innodb_additional_mem_pool_size }}
 
-innodb_buffer_pool_size {{ ansible_memtotal_mb * 0.7}}M
+innodb_buffer_pool_size {{ ( ansible_memtotal_mb * 0.7 )|int }}M
 innodb_buffer_pool_instances = {{ mysql_innodb_buffer_pool_instances }}
 innodb_data_file_path = {{ mysql_innodb_data_file_path }}
 innodb_file_per_table
