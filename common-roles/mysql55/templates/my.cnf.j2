@@ -1,6 +1,6 @@
 #***********************************************************
 #
-# my.cnf for MySQL <%= @version %>
+# my.cnf for MySQL 5.5
 #
 #***********************************************************
 
@@ -25,7 +25,7 @@ bind-address    = {{ mysql_bind_address }}
 
 back_log = {{ mysql_back_log }}
 #skip-networking
-{% if 'skip_name_resolve' in mysql_skip_name_resolve %}
+{% if  mysql_skip_name_resolve == 'skip_name_resolve' %}
 skip-name-resolve
 {% endif %}
 max_connections = {{ mysql_max_connections }}
@@ -120,7 +120,7 @@ federated
 
 ##### InnoDB Specific Configuration
 
-{% if 'skip-innodb' in mysql_skip_innodb %}
+{% if mysql_skip_innodb == 'skip-innodb' %}
 skip-innodb
 {% endif %}
 
