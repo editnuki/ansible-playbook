@@ -126,7 +126,7 @@ skip-innodb
 
 innodb_additional_mem_pool_size = {{ mysql_innodb_additional_mem_pool_size }}
 
-innodb_buffer_pool_size {{ ( ansible_memtotal_mb * 0.7 )|int }}M
+innodb_buffer_pool_size = {{ ( ansible_memtotal_mb * 0.7 )|int }}M
 innodb_buffer_pool_instances = {{ mysql_innodb_buffer_pool_instances }}
 innodb_data_file_path = {{ mysql_innodb_data_file_path }}
 innodb_file_per_table

@@ -9,3 +9,6 @@
     - mysql55-libs
     - mysql55-server
     - mysql55-test
+
+- name: chown mysql dir
+  shell: /bin/chown -R mysql. /var/lib/mysql
